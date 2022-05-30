@@ -4,13 +4,22 @@ import auth from "../../../config/auth";
 import { prisma } from "../../../database/prismaClient";
 import { AppError } from "../../../errors/AppError";
 
+interface IResponseClientAuthenticate {
+  client: {
+    username: string;
+  };
+  token: string;
+}
 interface IAuthenticateClient {
   username: string;
   password: string;
 }
 
 class AuthenticateClientUseCase {
-  async execute({ username, password }: IAuthenticateClient) {
+  async execute({
+    username,
+    password,
+  }: IAuthenticateClient): Promise<IResponseClientAuthenticate> {
     const client = await prisma.clients.findFirst({
       where: {
         username,
@@ -34,7 +43,14 @@ class AuthenticateClientUseCase {
       expiresIn: expires_in_token,
     });
 
-    return token;
+    const tokenResponse: IResponseClientAuthenticate = {
+      token,
+      client: {
+        username: client.username,
+      },
+    };
+
+    return tokenResponse;
   }
 }
 
