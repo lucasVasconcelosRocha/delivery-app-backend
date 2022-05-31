@@ -14,8 +14,6 @@ export class UpdateDeliverymanUseCase {
       },
     });
 
-    console.log(id_deliveryman, id_delivery);
-
     if (!deliveryExits) {
       throw new AppError("Delivery not exists.");
     }
@@ -28,8 +26,6 @@ export class UpdateDeliverymanUseCase {
         id_deliveryman,
       },
     });
-
-    console.log(delivery);
 
     return delivery;
   }
