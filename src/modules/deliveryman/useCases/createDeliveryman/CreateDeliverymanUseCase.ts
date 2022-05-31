@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs";
-import { prisma } from "../../../database/prismaClient";
-import { AppError } from "../../../errors/AppError";
+import { prisma } from "../../../../database/prismaClient";
+import { AppError } from "../../../../errors/AppError";
 
 interface ICreateDeliveryman {
   username: string;
@@ -12,6 +12,7 @@ export class CreateDeliverymanUseCase {
     const deliverymanExists = await prisma.deliveryman.findFirst({
       where: {
         username: {
+          equals: username,
           mode: "insensitive",
         },
       },
